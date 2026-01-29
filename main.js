@@ -1,75 +1,87 @@
-class LottoBalls extends HTMLElement {
-    constructor() {
-        super();
-        const shadow = this.attachShadow({ mode: 'open' });
+// DOM Elements
+const choiceButtons = document.querySelectorAll('.choice-btn');
+const playerScoreEl = document.getElementById('player-score');
+const computerScoreEl = document.getElementById('computer-score');
+const resultMessageEl = document.getElementById('result-message');
+const playerChoiceIconEl = document.getElementById('player-choice-icon');
+const computerChoiceIconEl = document.getElementById('computer-choice-icon');
 
-        const style = document.createElement('style');
-        style.textContent = `
-            .ball-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                padding: 20px;
-                background-color: #f0f0f0;
-                border-radius: 8px;
-            }
-            .ball {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: white;
-                box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2), 2px 2px 5px rgba(0,0,0,0.3);
-            }
-        `;
+// Game state
+let playerScore = 0;
+let computerScore = 0;
+const choices = ['rock', 'paper', 'scissors'];
+const choiceIcons = {
+    rock: '✊',
+    paper: '🖐️',
+    scissors: '✌️'
+};
 
-        const container = document.createElement('div');
-        container.setAttribute('class', 'ball-container');
-
-        shadow.appendChild(style);
-        shadow.appendChild(container);
-    }
-
-    set numbers(nums) {
-        const container = this.shadowRoot.querySelector('.ball-container');
-        container.innerHTML = '';
-        for (const num of nums) {
-            const ball = document.createElement('div');
-            ball.setAttribute('class', 'ball');
-            ball.textContent = num;
-            ball.style.backgroundColor = this.getColor(num);
-            container.appendChild(ball);
-        }
-    }
-
-    getColor(number) {
-        const hue = (number * 137.5) % 360;
-        return `hsl(${hue}, 70%, 50%)`;
-    }
-}
-
-customElements.define('lotto-balls', LottoBalls);
-
-function generateLottoNumbers() {
-    const numbers = new Set();
-    while (numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
-    }
-    return Array.from(numbers).sort((a, b) => a - b);
-}
-
-const generateBtn = document.getElementById('generate-btn');
-const lottoBalls = document.querySelector('lotto-balls');
-
-generateBtn.addEventListener('click', () => {
-    const newNumbers = generateLottoNumbers();
-    lottoBalls.numbers = newNumbers;
+// Add event listeners to buttons
+choiceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const playerChoice = button.dataset.choice;
+        playRound(playerChoice);
+    });
 });
 
-// Initial generation
-lottoBalls.numbers = generateLottoNumbers();
+function playRound(playerChoice) {
+    const computerChoice = getComputerChoice();
+    const result = getResult(playerChoice, computerChoice);
+
+    updateScores(result);
+    updateUI(result, playerChoice, computerChoice);
+}
+
+function getComputerChoice() {
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+}
+
+function getResult(player, computer) {
+    if (player === computer) {
+        return 'draw';
+    } else if (
+        (player === 'rock' && computer === 'scissors') ||
+        (player === 'paper' && computer === 'rock') ||
+        (player === 'scissors' && computer === 'paper')
+    ) {
+        return 'win';
+    } else {
+        return 'lose';
+    }
+}
+
+function updateScores(result) {
+    if (result === 'win') {
+        playerScore++;
+    } else if (result === 'lose') {
+        computerScore++;
+    }
+}
+
+function updateUI(result, playerChoice, computerChoice) {
+    // Update scores
+    playerScoreEl.textContent = playerScore;
+    computerScoreEl.textContent = computerScore;
+
+    // Update choice icons
+    playerChoiceIconEl.textContent = choiceIcons[playerChoice];
+    computerChoiceIconEl.textContent = choiceIcons[computerChoice];
+
+    // Update result message and color
+    resultMessageEl.classList.remove('win', 'lose', 'draw');
+    switch (result) {
+        case 'win':
+            resultMessageEl.textContent = '이겼습니다! 🎉';
+            resultMessageEl.classList.add('win');
+            break;
+        case 'lose':
+            resultMessageEl.textContent = '졌습니다... 😢';
+            resultMessageEl.classList.add('lose');
+            break;
+        case 'draw':
+            resultMessageEl.textContent = '비겼습니다! 🤝';
+            resultMessageEl.classList.add('draw');
+            break;
+    }
+}
