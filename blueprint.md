@@ -1,32 +1,38 @@
-# Blueprint: Rock Paper Scissors Game
+# Blueprint: Space Shooter Game
 
 ## Overview
 
-This project is a classic Rock, Paper, Scissors game built with HTML, CSS, and JavaScript. The user can play against the computer. The application is designed to be fully responsive and playable on both desktop and mobile devices.
+This project is a classic arcade-style space shooter game, reminiscent of 'Galaga'. It's built entirely with HTML, CSS, and JavaScript, using the HTML Canvas for rendering. The game is designed to be playable on both desktop (with keyboard) and mobile (with touch controls).
 
 ## Design & Style
 
-*   **Theme:** Modern, clean, and playful.
-*   **Layout:** A centered, single-column layout that is easy to navigate on mobile.
+*   **Theme:** Retro Sci-Fi, 8-bit arcade aesthetic.
+*   **Layout:** A single, full-screen canvas where the game takes place. Score and other UI elements will be overlaid on top.
 *   **Color Palette:**
-    *   Background: A soft, off-white or light gray.
-    *   Player UI (Buttons, etc.): A vibrant, encouraging blue.
-    *   Computer UI: A neutral gray.
-    *   Win/Lose/Draw colors: Green for win, Red for lose, Gray for draw.
-*   **Typography:** Clear, sans-serif font (like 'Poppins' or 'Nunito' from Google Fonts) for readability.
-*   **Icons:** Use universally recognized icons for rock (fist), paper (hand), and scissors (scissors).
-*   **Animation:** Subtle animations for button presses, and the appearance of choices to make the game feel more dynamic.
+    *   Background: Deep space black (`#000`).
+    *   Player Ship: Heroic blue or white.
+    *   Enemy Ships: Menacing reds, purples, and greens.
+    *   Projectiles: Bright, contrasting colors (e.g., yellow for player, pink for enemies).
+    *   Text/UI: Classic arcade font, bright white or yellow.
+*   **Graphics:** Simple, pixel-art style graphics for the player, enemies, and explosions, all drawn programmatically on the canvas.
+*   **Sound (Optional Future Feature):** Simple sound effects for shooting, explosions, and background music could be added later.
 
 ## Features
 
-*   **Player vs. Computer:** The user plays against a computer-controlled opponent.
-*   **Scoring:** The game keeps track of the score for both the player and the computer.
-*   **Clear Choices:** The user selects their choice by clicking one of three iconic buttons (Rock, Paper, or Scissors).
-*   **Result Display:** The game clearly displays the outcome of each round (Win, Lose, or Draw) and shows both the player's and the computer's choices.
-*   **Responsive Design:** The interface adapts seamlessly to different screen sizes.
+*   **Player Control:**
+    *   Desktop: The player's ship moves left and right using the Arrow Keys or 'A' and 'D' keys.
+    *   Mobile: The player's ship follows the user's finger (touch-and-drag).
+    *   Shooting: The player can fire projectiles upwards by pressing the Spacebar or tapping the screen.
+*   **Enemies:** Swarms of enemy ships will appear from the top of the screen, moving in formation.
+*   **Combat:** The player must shoot down enemies to score points.
+*   **Scoring:** A visible score counter tracks the player's points.
+*   **Lives:** The player will have a limited number of lives. The game ends when all lives are lost.
+*   **Game Loop:** A smooth, consistent game loop using `requestAnimationFrame` for rendering.
+*   **Collision Detection:** The game will detect collisions between player projectiles and enemies, and between enemy ships and the player.
+*   **Responsive Canvas:** The game canvas will adapt to the size of the browser window.
 
 ## File Structure
 
-*   `index.html`: The main structure of the game interface.
-*   `style.css`: All styling, including layout, colors, fonts, and responsiveness.
-*   `main.js`: Game logic, including user input, computer choice, scorekeeping, and DOM manipulation.
+*   `index.html`: Contains the `<canvas>` element and basic UI structure.
+*   `style.css`: Styles the page, centers the canvas, and handles UI element positioning.
+*   `main.js`: Contains all the game logic, including rendering, controls, and game state management.

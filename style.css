@@ -1,184 +1,76 @@
-:root {
-    --bg-color: #f8f9fa;
-    --text-color: #333;
-    --primary-color: #007bff;
-    --light-text-color: #fff;
-    --win-color: #28a745;
-    --lose-color: #dc3545;
-    --draw-color: #6c757d;
-    --card-bg: #ffffff;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
     margin: 0;
-    padding: 20px;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden; /* Prevents scrollbars */
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    box-sizing: border-box;
+    height: 100vh;
 }
 
-header {
+#gameCanvas {
+    background-color: #000;
+    display: block; /* Removes default canvas margin */
+}
+
+#ui-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 2px 2px 4px #f0f;
+    z-index: 10;
+}
+
+#score {
+    padding: 10px;
+}
+
+#lives {
+    padding: 10px;
+}
+
+#start-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
+    z-index: 20;
+}
+
+h1 {
+    font-size: 4rem;
+    color: #0ff;
+    text-shadow: 3px 3px 8px #f0f;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1rem;
     margin-bottom: 2rem;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin: 0;
-}
-
-.game-container {
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.scoreboard, .result-display, .player-controls {
-    background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    text-align: center;
-}
-
-h2 {
+#start-button {
+    font-family: 'Courier New', Courier, monospace;
     font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.score {
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-}
-
-.score-card {
-    flex: 1;
-}
-
-.score-label {
-    font-size: 1rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
-}
-
-.score-count {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-#player-label { color: var(--win-color); }
-#computer-label { color: var(--lose-color); }
-
-.result-display #result-message {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem 0;
-    min-height: 50px;
-}
-
-.choices-display {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.choice {
-    text-align: center;
-}
-
-.choice-label {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-}
-
-.choice-icon, .choice span {
-    font-size: 4rem;
-}
-
-.player-controls .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.choice-btn {
-    font-size: 3rem;
-    background-color: var(--primary-color);
-    color: var(--light-text-color);
-    border: none;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: 2px solid #0ff;
+    color: #0ff;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.4);
+    box-shadow: 0 0 15px #0ff;
+    transition: all 0.3s ease;
 }
 
-.choice-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.6);
-}
-
-.choice-btn:active {
-    transform: scale(0.95);
-}
-
-/* Result Classes */
-.win {
-    color: var(--win-color);
-}
-
-.lose {
-    color: var(--lose-color);
-}
-
-.draw {
-    color: var(--draw-color);
-}
-
-/* Responsive Design for Mobile */
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
-    }
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .scoreboard, .result-display, .player-controls {
-        padding: 15px;
-    }
-
-    .choice-btn {
-        width: 70px;
-        height: 70px;
-        font-size: 2.5rem;
-    }
-
-    .result-display #result-message {
-        font-size: 1.5rem;
-    }
-
-    .choice-icon, .choice span {
-        font-size: 3rem;
-    }
+#start-button:hover {
+    background-color: #0ff;
+    color: #000;
+    box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
 }
